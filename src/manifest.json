@@ -1,10 +1,10 @@
 {
-  "description": "A boilerplate for Selenium IDE plugins",
+  "description": "Converts uploaded files into an enumerable object to be used in Selenium IDE tests (e.g., data-driven testing).",
   "manifest_version": 2,
-  "name": "Selenium IDE plugin",
+  "name": "SIDE File Uploader",
   "version": "1.0.0.0",
   "version_name": "1.0.0",
-  "homepage_url": "https://github.com/SeleniumHQ/selenium-ide/tree/master/packages/extension-boilerplate",
+  "homepage_url": "",
   "permissions": [],
   "content_security_policy": "script-src 'self'; object-src 'self'",
   "externally_connectable": {
