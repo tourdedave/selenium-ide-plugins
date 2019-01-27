@@ -30,6 +30,7 @@ export default {
   entry: {
     content: ['./content'],
     background: ['./background'],
+    app: ['react-hot-loader/patch', './app/containers/Root'],
   },
   output: {
     path: path.resolve(__dirname, 'build/assets'),
