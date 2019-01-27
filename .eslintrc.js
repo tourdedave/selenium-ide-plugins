@@ -1,56 +1,34 @@
 module.exports = {
-  "env": {
-    "browser": true,
-    "node": true,
-    "es6": true,
-    "jest": true,
-    "webextensions": true
+  env: {
+    browser: true,
+    node: true,
+    es6: true,
+    jest: true,
+    webextensions: true,
   },
-  "extends": ["eslint:recommended"],
-  "parser": "babel-eslint",
-  "parserOptions": {
-    "ecmaFeatures": {
-      "experimentalObjectRestSpread": true
+  extends: ['eslint:recommended', 'plugin:react/recommended', 'prettier'],
+  parser: 'babel-eslint',
+  parserOptions: {
+    ecmaFeatures: {
+      experimentalObjectRestSpread: true,
+      jsx: true,
+      legacyDecorators: true,
     },
-    "sourceType": "module"
+    sourceType: 'module',
   },
-  "plugins": [
-    "class-property"
-  ],
-  "rules": {
-    "no-trailing-spaces": [
-      "error"
+  plugins: ['jest', 'react', 'prettier'],
+  rules: {
+    'prettier/prettier': 'error',
+    'react/prop-types': [0],
+    'no-const-assign': 'error',
+    'no-this-before-super': 'error',
+    'no-undef': 'error',
+    'no-unreachable': 'error',
+    'no-unused-vars': [
+      'error',
+      { varsIgnorePattern: '^_', args: 'all', argsIgnorePattern: '^_' },
     ],
-    "no-multiple-empty-lines": [
-      "error",
-      { "max": 2, "maxEOF": 1 }
-    ],
-    "eol-last": [
-      "error",
-      "always"
-    ],
-    "comma-dangle": [
-      "error",
-      "never"
-    ],
-    "indent": [
-      "error",
-      2,
-      { "SwitchCase": 1 }
-    ],
-    "linebreak-style": [
-      "error",
-      "unix"
-    ],
-    "semi": [
-      "error",
-      "always"
-    ],
-    "no-console": [
-      0
-    ],
-    "no-var": [
-      "error"
-    ]
-  }
-};
+    'constructor-super': 'error',
+    'valid-typeof': 'error',
+  },
+}
