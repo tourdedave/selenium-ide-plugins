@@ -1,25 +1,29 @@
 {
-  "description": "Converts uploaded files into an enumerable object to be used in Selenium IDE tests (e.g., data-driven testing).",
-  "manifest_version": 2,
-  "name": "SIDE File Uploader",
-  "version": "1.0.0.0",
-  "version_name": "1.0.0",
-  "homepage_url": "",
-  "permissions": [],
-  "content_security_policy": "script-src 'self'; object-src 'self'",
-  "externally_connectable": {
-    "ids": ["*"]
-  },
-  "content_scripts": [
-    {
-      "matches": ["<all_urls>"],
-      "js": ["assets/content.js"],
-      "match_about_blank": true,
-      "all_frames": true
-    }
-  ],
-  "background":
-  {
-    "scripts": ["assets/background.js"]
-  }
+	"description": "Converts uploaded files into an enumerable object to be used in Selenium IDE tests (e.g., data-driven testing).",
+	"manifest_version": 2,
+	"name": "Selenium IDE File Uploader",
+	"version": "1.0.0.0",
+	"version_name": "1.0.0",
+	"homepage_url": "http://the-internet.herokuapp.com",
+	"permissions": [],
+	"content_security_policy": "script-src 'self'; object-src 'self'",
+	"externally_connectable": {
+		"ids": ["*"]
+	},
+	"browser_action": {
+		"default_title": "Selenium IDE File Uploader",
+		"default_popup": "assets/index.html"
+	},
+	"content_scripts": [
+		{
+			"matches": ["<all_urls>"],
+			"js": ["assets/content.js"],
+			"match_about_blank": true,
+			"all_frames": true
+		}
+	],
+	"background":
+	{
+		"scripts": ["assets/background.js"]
+	}
 }
