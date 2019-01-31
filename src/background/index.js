@@ -15,36 +15,55 @@
 // specific language governing permissions and limitations
 // under the License.
 
-import browser from "webextension-polyfill";
+import browser from 'webextension-polyfill'
 
-browser.runtime.sendMessage(process.env.SIDE_ID, {
-  uri: "/register",
-  verb: "post",
-  payload: {
-    name: "Selenium IDE plugin",
-    version: "1.0.0",
-    commands: [
-      {
-        id: "successfulCommand",
-        name: "successful command"
-      },
-      {
-        id: "failCommand",
-        name: "failed command"
-      }
-    ]
-  }
-}).catch(console.error);
+browser.runtime
+  .sendMessage(process.env.SIDE_ID, {
+    uri: '/register',
+    verb: 'post',
+    payload: {
+      name: 'Selenium IDE plugin',
+      version: '1.0.0',
+      commands: [
+        //{
+        //  id: 'successfulCommand',
+        //  name: 'successful command',
+        //  docs: {
+        //    description: 'a blah to the blah',
+        //    target: { name: 'blah', description: 'blah' },
+        //  },
+        //},
+        //{
+        //  id: 'failCommand',
+        //  name: 'failed command',
+        //  docs: {
+        //    description: 'more a blah to the blah blah',
+        //    target: { name: 'aloblah', description: 'aloblah' },
+        //  },
+        //},
+      ],
+    },
+  })
+  .catch(console.error) // eslint-disable-line
 
-browser.runtime.onMessageExternal.addListener((message, sender, sendResponse) => {
-  if (message.action === "execute") {
-    switch (message.command.command) {
-      case "successfulCommand":
-        sendResponse(true);
-        break;
-      case "failCommand":
-        sendResponse({ error: "Some failure has occurred" });
-        break;
-    }
+//browser.runtime.onMessageExternal.addListener(
+//  (_message, _sender, _sendResponse) => {
+//    //if (message.action === 'execute') {
+//    //  switch (message.command.command) {
+//    //    case 'successfulCommand':
+//    //      sendResponse(true)
+//    //      break
+//    //    case 'failCommand':
+//    //      sendResponse({ error: 'Some failure has occurred' })
+//    //      break
+//    //  }
+//    //}
+//  }
+//)
+
+browser.runtime.onMessage.addListener((message, _sender, _sendResponse) => {
+  if (message.fileUploaded) {
+    console.log(message)
+    return true
   }
-});
+})
