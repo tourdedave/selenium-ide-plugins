@@ -13,7 +13,6 @@ export default class OpenInput extends React.Component {
   }
   handleChange(event) {
     this.props.onFileSelected(event.target.files[0])
-    this.input.value = ''
   }
   render() {
     return (
