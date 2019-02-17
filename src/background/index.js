@@ -16,54 +16,77 @@
 // under the License.
 
 import browser from 'webextension-polyfill'
+import UAParser from 'ua-parser-js'
 
-browser.runtime
-  .sendMessage(process.env.SIDE_ID, {
-    uri: '/register',
-    verb: 'post',
-    payload: {
-      name: 'Selenium IDE plugin',
-      version: '1.0.0',
-      commands: [
-        //{
-        //  id: 'successfulCommand',
-        //  name: 'successful command',
-        //  docs: {
-        //    description: 'a blah to the blah',
-        //    target: { name: 'blah', description: 'blah' },
-        //  },
-        //},
-        //{
-        //  id: 'failCommand',
-        //  name: 'failed command',
-        //  docs: {
-        //    description: 'more a blah to the blah blah',
-        //    target: { name: 'aloblah', description: 'aloblah' },
-        //  },
-        //},
-      ],
-    },
-  })
-  .catch(console.error) // eslint-disable-line
+const parser = new UAParser(window.navigator.userAgent)
+const browserName = parser.getBrowser().name
+const isChrome = browserName === 'Chrome'
+const isFirefox = browserName === 'Firefox'
 
-//browser.runtime.onMessageExternal.addListener(
-//  (_message, _sender, _sendResponse) => {
-//    //if (message.action === 'execute') {
-//    //  switch (message.command.command) {
-//    //    case 'successfulCommand':
-//    //      sendResponse(true)
-//    //      break
-//    //    case 'failCommand':
-//    //      sendResponse({ error: 'Some failure has occurred' })
-//    //      break
-//    //  }
-//    //}
-//  }
-//)
+function getId() {
+  if (process.env.SIDE_ID) return process.env.SIDE_ID
+  return isChrome
+    ? 'mooikfkahbdckldjjndioackbalphokd'
+    : isFirefox
+    ? '{a6fd85ed-e919-4a43-a5af-8da18bda539f}'
+    : ''
+}
 
-browser.runtime.onMessage.addListener((message, _sender, _sendResponse) => {
+const seideId = getId()
+
+function startPolling(payload) {
+  setInterval(() => {
+    browser.runtime
+      .sendMessage(seideId, {
+        uri: '/health',
+        verb: 'get',
+      })
+      .catch(res => ({ error: res.message }))
+      .then(res => {
+        if (!res) {
+          browser.runtime.sendMessage(seideId, {
+            uri: '/register',
+            verb: 'post',
+            payload,
+          })
+        }
+      })
+  }, 1000)
+}
+
+startPolling({
+  name: 'Selenium IDE plugin',
+  version: '1.0.0',
+  commands: [],
+})
+
+let fileContents
+
+browser.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   if (message.fileUploaded) {
-    console.log(message)
-    return true
+    fileContents = message.contents
+    return sendResponse(true)
   }
 })
+
+browser.runtime.onMessageExternal.addListener(
+  (message, _sender, sendResponse) => {
+    if (message.event === 'playbackStarted') {
+      browser.runtime
+        .sendMessage(seideId, {
+          uri: '/playback/var',
+          verb: 'put',
+          payload: {
+            name: 'blah',
+            contents: 'blah',
+          },
+        })
+        .then(() => {
+          debugger
+          return sendResponse(true)
+        })
+      return true
+    }
+    sendResponse(undefined)
+  }
+)
