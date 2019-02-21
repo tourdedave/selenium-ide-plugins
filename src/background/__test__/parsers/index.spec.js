@@ -12,5 +12,6 @@ describe('parsers', () => {
       const output = '{"a":["d","g"],"b":["e","h"],"c":["f","i"]}'
       expect(CSVtoJSON(input)).toEqual(output)
     })
+    it.skip('handles windows newlines', () => {})
   })
 })
