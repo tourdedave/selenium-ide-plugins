@@ -17,6 +17,7 @@
 
 import browser from 'webextension-polyfill'
 import UAParser from 'ua-parser-js'
+import { CSVtoJSON } from './parsers'
 
 const parser = new UAParser(window.navigator.userAgent)
 const browserName = parser.getBrowser().name
@@ -55,16 +56,17 @@ function startPolling(payload) {
 }
 
 startPolling({
-  name: 'Selenium IDE plugin',
+  name: 'File Uploader for Selenium IDE',
   version: '1.0.0',
   commands: [],
 })
 
-let fileContents
+let uploadedFile = {}
 
 browser.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   if (message.fileUploaded) {
-    fileContents = message.contents
+    uploadedFile.name = message.name
+    uploadedFile.contents = CSVtoJSON(message.contents)
     return sendResponse(true)
   }
 })
@@ -76,13 +78,9 @@ browser.runtime.onMessageExternal.addListener(
         .sendMessage(seideId, {
           uri: '/playback/var',
           verb: 'put',
-          payload: {
-            name: 'blah',
-            contents: 'blah',
-          },
+          payload: uploadedFile,
         })
         .then(() => {
-          debugger
           return sendResponse(true)
         })
       return true

@@ -22,9 +22,11 @@ export default class Panel extends React.Component {
   }
 
   emitFileContents(contents) {
+    console.log(contents)
     browser.runtime.sendMessage({
       fileUploaded: true,
-      contents: JSON.stringify(contents),
+      name: 'fileContents', // var name
+      contents: contents, // file contents
     })
   }
 
