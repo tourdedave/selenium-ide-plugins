@@ -22,7 +22,6 @@ export default class Panel extends React.Component {
   }
 
   emitFileContents(contents) {
-    console.log(contents)
     browser.runtime.sendMessage({
       fileUploaded: true,
       name: 'fileContents', // var name
