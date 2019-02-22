@@ -1,6 +1,6 @@
 export function CSVtoJSON(contents) {
   let result = {}
-  const _contents = contents.split('\n')
+  const _contents = contents.split(/\r?\n/)
   const keys = _contents.shift().split(',')
 
   keys.forEach(function(key, keyIndex) {

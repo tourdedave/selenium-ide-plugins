@@ -12,6 +12,10 @@ describe('parsers', () => {
       const output = '{"a":["d","g"],"b":["e","h"],"c":["f","i"]}'
       expect(CSVtoJSON(input)).toEqual(output)
     })
-    it.skip('handles windows newlines', () => {})
+    it('handles windows newlines', () => {
+      const input = 'a,b,c\r\nd,e,f\r\ng,h,i'
+      const output = '{"a":["d","g"],"b":["e","h"],"c":["f","i"]}'
+      expect(CSVtoJSON(input)).toEqual(output)
+    })
   })
 })
