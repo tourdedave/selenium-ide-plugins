@@ -5,7 +5,6 @@ Some plugins to help you unlock some new functionality in Selenium IDE.
 ## Building
 
 ```sh
-> yarn
 > yarn build
 ```
 
