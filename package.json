@@ -1,0 +1,6 @@
+{
+  "name": "selenium-ide-plugins",
+  "scripts": {
+    "build": "cd file-uploader && yarn build"
+  }
+}
