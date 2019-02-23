@@ -5,7 +5,9 @@
 	"version": "1.0.0.0",
 	"version_name": "1.0.0",
 	"homepage_url": "http://the-internet.herokuapp.com",
-	"permissions": [],
+	"permissions": [
+    "storage"
+  ],
 	"content_security_policy": "script-src 'self'; object-src 'self'",
 	"externally_connectable": {
 		"ids": ["*"]
