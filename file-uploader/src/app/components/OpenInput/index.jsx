@@ -27,16 +27,6 @@ export default class OpenInput extends React.Component {
       <div className="file-input">
         <h4>Selenium IDE File Uploader</h4>
         <input type="file" onChange={this.handleChange} />
-        <br />
-        <br />
-        {this.state.uploadedFile ? (
-          <div>
-            <p>Currently Uploaded File:</p>
-            <p>{this.state.uploadedFile}</p>
-          </div>
-        ) : (
-          undefined
-        )}
       </div>
     )
   }
