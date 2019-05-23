@@ -10,6 +10,12 @@ Some plugins to help you unlock some new functionality in Selenium IDE.
 
 ## Installing
 
+### Get a working build
+
+You can either build a plugin yourself or grab a package build from [the latest available release](https://github.com/tourdedave/selenium-ide-plugins/releases/latest).
+
+Once you have it, it's a simple matter of installing it in your preferred browser.
+
 ### Chrome
 
 1. Visit `chrome://extensions` in the Chrome address bar
